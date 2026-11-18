@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Uzair Uddin | Accounting & Tax Professional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#080c18;--bg2:#0d1224;--bg3:#111827;--surface:#161d30;
+  --border:rgba(212,168,83,0.15);--gold:#d4a853;--gold2:#e8c278;
+  --gold-dim:rgba(212,168,83,0.08);--text:#e8e0d0;--text2:#9a9080;
+  --text3:#6b6055;--white:#f5f0e8;--accent:#c8934a;--nav-w:72px;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="light"]{
+  --bg:#f5f0e8;--bg2:#ede8dc;--bg3:#e5dfd0;--surface:#faf7f2;
+  --border:rgba(139,100,30,0.2);--gold:#9a6e1e;--gold2:#b8882a;
+  --gold-dim:rgba(139,100,30,0.07);--text:#1a1510;--text2:#5a5040;--text3:#8a7a60;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:none;border:none;background:none;font-family:inherit}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen}
+#curring{position:fixed;width:38px;height:38px;border:1px solid rgba(212,168,83,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s}
+body:has(a:hover) #cur,body:has(button:hover) #cur{width:18px;height:18px}
+body:has(a:hover) #curring,body:has(button:hover) #curring{width:56px;height:56px;border-color:var(--gold)}
+
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9997;opacity:.65}
+
+/* PROGRESS */
+#prog{position:fixed;top:0;left:var(--nav-w);right:0;height:2px;background:var(--border);z-index:200}
+#progbar{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold2));width:0%;transition:width .1s}
+
+/* SIDE NAV */
+#sidenav{position:fixed;left:0;top:0;width:var(--nav-w);height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:2rem 0;z-index:100}
+.nav-brand{writing-mode:vertical-rl;text-orientation:mixed;font-family:'Playfair Display',serif;font-size:.72rem;letter-spacing:.22em;color:var(--gold);font-weight:600;transform:rotate(180deg)}
+.nav-dots{display:flex;flex-direction:column;gap:1.8rem;align-items:center}
+.nav-dot{position:relative;display:flex;align-items:center;cursor:none}
+.ndi{width:6px;height:6px;border-radius:50%;background:var(--text3);transition:background .3s,transform .3s}
+.nav-dot.active .ndi{background:var(--gold);transform:scale(1.8)}
+.ndl{position:absolute;left:calc(100% + 16px);background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .8rem;white-space:nowrap;opacity:0;pointer-events:none;transform:translateX(-8px);transition:opacity .2s,transform .2s}
+.nav-dot:hover .ndl{opacity:1;transform:translateX(0)}
+.nav-actions{display:flex;flex-direction:column;gap:1rem;align-items:center}
+.nibtn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:50%;color:var(--text2);font-size:.82rem;transition:all .2s;cursor:none}
+.nibtn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+
+/* MOBILE NAV */
+#mobnav{display:none;position:fixed;top:0;left:0;right:0;height:60px;background:var(--bg2);border-bottom:1px solid var(--border);align-items:center;justify-content:space-between;padding:0 1.5rem;z-index:200}
+.mobbrand{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold)}
+#ham{display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+#ham span{display:block;width:22px;height:2px;background:var(--text);transition:all .3s}
+#ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+#ham.open span:nth-child(2){opacity:0}
+#ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+#mobmenu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);z-index:199;flex-direction:column}
+#mobmenu.open{display:flex}
+#mobmenu a{padding:1rem 1.5rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);border-bottom:1px solid var(--border);transition:color .2s,background .2s}
+#mobmenu a:hover{color:var(--gold);background:var(--gold-dim)}
+
+/* LAYOUT */
+main{margin-left:var(--nav-w)}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 420px;position:relative;overflow:hidden}
+.hlines{position:absolute;inset:0;background-image:linear-gradient(rgba(212,168,83,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(212,168,83,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hglow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(212,168,83,.07) 0%,transparent 65%);top:-100px;left:-100px;pointer-events:none;animation:glowpulse 6s ease-in-out infinite}
+@keyframes glowpulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.12);opacity:.7}}
+.hleft{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 5rem;position:relative;z-index:1}
+.hright{background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;padding:5rem 3rem;position:relative;z-index:1;animation:fadein 1s var(--ease) .5s both}
+.hright::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--gold),transparent)}
+
+.eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;animation:slideR .8s var(--ease) .1s both}
+.eline{width:40px;height:1px;background:var(--gold)}
+.etxt{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.hstatus{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold-dim);border:1px solid var(--border);padding:.3rem .8rem;border-radius:20px;font-size:.66rem;color:var(--gold);letter-spacing:.1em;margin-bottom:2rem;animation:slideR .8s var(--ease) .2s both}
+.sdot{width:6px;height:6px;background:#4ade80;border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+h1.hname{font-family:'Playfair Display',serif;font-weight:900;line-height:.88;letter-spacing:-.02em;margin-bottom:2.5rem;animation:slideR .9s var(--ease) .3s both}
+h1.hname .l1{font-size:clamp(4.5rem,8vw,7.5rem);color:var(--text);display:block}
+h1.hname .l2{font-size:clamp(4.5rem,8vw,7.5rem);color:var(--gold);font-style:italic;display:block}
+.htagline{font-size:1rem;line-height:1.85;color:var(--text2);max-width:46ch;margin-bottom:3.5rem;animation:slideR .9s var(--ease) .4s both}
+.htagline strong{color:var(--text);font-weight:500}
+.hbtns{display:flex;gap:1rem;flex-wrap:wrap;animation:slideR .9s var(--ease) .5s both}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 2rem;font-size:.76rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;transition:all .25s var(--ease);cursor:none;border-radius:2px}
+.btnfill{background:var(--gold);color:var(--bg)}
+.btnfill:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,168,83,.28)}
+.btnout{border:1px solid var(--border);color:var(--text)}
+.btnout:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+
+/* STATS */
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:3rem}
+.statbox{background:var(--bg3);padding:2rem 1.5rem;border:1px solid var(--border);transition:background .3s,transform .3s}
+.statbox:hover{background:var(--gold-dim);transform:translateY(-2px)}
+.statval{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:.5rem}
+.statlbl{font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);line-height:1.4}
+
+/* QUICK INFO */
+.qinfo{display:flex;flex-direction:column;gap:1.1rem}
+.qrow{display:flex;align-items:flex-start;gap:1rem;padding-bottom:1.1rem;border-bottom:1px solid var(--border)}
+.qrow:last-child{border-bottom:none}
+.qicon{width:32px;height:32px;background:var(--gold-dim);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;margin-top:.1rem}
+.qlbl{font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem}
+.qval{font-size:.85rem;color:var(--text);font-weight:400}
+
+/* SECTIONS */
+.sec{padding:8rem 5rem;border-top:1px solid var(--border)}
+.sec-alt{background:var(--bg2)}
+.sechd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:5rem;flex-wrap:wrap;gap:1rem}
+.secnum{font-size:.68rem;letter-spacing:.2em;color:var(--gold);margin-bottom:.8rem;font-weight:500}
+h2.sectitle{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:700;line-height:1.05;color:var(--text)}
+h2.sectitle em{font-style:italic;color:var(--gold)}
+.secline{display:flex;align-items:center;gap:1rem;margin-top:1.5rem}
+.secline span.ln{width:3rem;height:1px;background:var(--gold)}
+.secsub{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text3)}
+
+/* ABOUT */
+.ablayout{display:grid;grid-template-columns:1fr 340px;gap:5rem;align-items:start}
+.abtext p{font-size:1.05rem;line-height:1.9;color:var(--text2);margin-bottom:1.8rem}
+.abtext p strong{color:var(--text);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2.5rem}
+.chip{padding:.4rem 1rem;background:var(--gold-dim);border:1px solid var(--border);font-size:.73rem;color:var(--text2);letter-spacing:.06em;border-radius:2px;transition:all .2s;cursor:default}
+.chip:hover{background:rgba(212,168,83,.15);color:var(--gold);border-color:var(--gold)}
+.abcard{background:var(--bg3);border:1px solid var(--border);overflow:hidden}
+.abcardhd{background:var(--gold-dim);border-bottom:1px solid var(--border);padding:1.2rem 1.5rem;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.cirow{display:flex;flex-direction:column;padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);gap:.2rem;transition:background .2s}
+.cirow:last-child{border-bottom:none}
+.cirow:hover{background:var(--gold-dim)}
+.cilbl{font-size:.61rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.cival{font-size:.88rem;color:var(--text);font-weight:400}
+
+/* EXPERIENCE */
+.exptl{position:relative;padding-left:2rem}
+.exptl::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(180deg,var(--gold) 0%,transparent 100%)}
+.expitem{position:relative;margin-bottom:5rem}
+.expitem:last-child{margin-bottom:0}
+.expitem::before{content:'';position:absolute;left:-2.4rem;top:8px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);box-shadow:0 0 12px rgba(212,168,83,.4)}
+.exptop{display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;margin-bottom:.6rem;flex-wrap:wrap}
+.exprole{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:600;font-style:italic;color:var(--text);margin-bottom:.3rem}
+.expco{font-size:.78rem;font-weight:500;color:var(--gold);letter-spacing:.08em}
+.expbadge{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem 1rem;background:var(--gold-dim);border:1px solid var(--border);font-size:.68rem;letter-spacing:.1em;color:var(--gold2);white-space:nowrap;border-radius:2px}
+.bdot{width:5px;height:5px;background:#4ade80;border-radius:50%;animation:blink 2s infinite}
+.expgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:2rem;background:var(--border);border:1px solid var(--border)}
+.expduty{background:var(--bg);padding:1.4rem 1.6rem;display:flex;gap:.9rem;align-items:flex-start;transition:background .25s}
+.expduty:hover{background:var(--gold-dim)}
+.darrow{color:var(--gold);font-size:.72rem;flex-shrink:0;margin-top:.2rem;opacity:.7}
+.dtxt{font-size:.88rem;line-height:1.7;color:var(--text2)}
+
+/* SKILLS */
+.sklist{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+.skcat{margin-bottom:3rem}
+.skcattitle{font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;display:flex;align-items:center;gap:1rem}
+.skcattitle::after{content:'';flex:1;height:1px;background:var(--border)}
+.skitem{margin-bottom:1.4rem}
+.sktop{display:flex;justify-content:space-between;margin-bottom:.5rem}
+.skname{font-size:.84rem;color:var(--text);font-weight:400}
+.skpct{font-size:.72rem;color:var(--gold);font-weight:500}
+.sktrack{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.skfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold2));border-radius:2px;width:0%;transition:width 1.2s var(--ease)}
+.toolwall{display:flex;flex-wrap:wrap;gap:.6rem}
+.ttag{padding:.45rem 1rem;background:var(--bg3);border:1px solid var(--border);font-size:.75rem;color:var(--text2);letter-spacing:.05em;border-radius:2px;transition:all .2s;cursor:default}
+.ttag:hover{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+
+/* TICKER */
+.tickwrap{overflow:hidden;background:var(--gold);padding:1.2rem 0;margin-top:5rem}
+.ticktrack{display:flex;width:max-content;animation:ticker 30s linear infinite}
+.tickitem{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--bg);padding:0 2.5rem;white-space:nowrap;font-weight:600;opacity:.85}
+.ticksep{color:rgba(0,0,0,.3);padding:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* EDUCATION */
+.edugrid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.educard{position:relative;background:var(--bg3);padding:3.5rem;border:1px solid var(--border);overflow:hidden;transition:transform .3s,background .3s}
+.educard:hover{transform:translateY(-4px);background:var(--surface)}
+.educard::before{content:attr(data-abbr);position:absolute;right:-.5rem;bottom:-1rem;font-family:'Playfair Display',serif;font-size:8rem;font-weight:900;color:rgba(212,168,83,.05);line-height:1;pointer-events:none;user-select:none}
+.edudeg{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold);line-height:1.15;margin-bottom:.5rem}
+.eduspec{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);margin-bottom:2rem}
+.educol{font-size:.92rem;color:var(--text2);line-height:1.6;margin-bottom:.5rem}
+.eduyear{font-size:.7rem;color:var(--text3);letter-spacing:.08em;margin-bottom:1.5rem}
+.edubadge{display:inline-block;padding:.4rem 1rem;background:var(--gold-dim);border:1px solid var(--border);font-size:.78rem;color:var(--gold);letter-spacing:.08em;border-radius:2px}
+
+/* CERTS TABLE */
+.certtbl{width:100%;border-collapse:collapse}
+.certtbl th{text-align:left;padding:.8rem 1.5rem;font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--border);font-weight:500}
+.certtbl td{padding:1.6rem 1.5rem;border-bottom:1px solid var(--border);vertical-align:middle}
+.certtbl tr:last-child td{border-bottom:none}
+.certtbl tbody tr{transition:background .2s;cursor:default}
+.certtbl tbody tr:hover{background:var(--gold-dim)}
+.ctitle{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--text)}
+.cissuer{font-size:.76rem;color:var(--text3);letter-spacing:.08em;text-transform:uppercase}
+.cyear{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);font-weight:600;text-align:right}
+
+/* HIGHLIGHTS */
+.hlgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.hlcard{background:var(--bg3);border:1px solid var(--border);padding:3rem;position:relative;overflow:hidden;transition:transform .3s,background .3s}
+.hlcard:hover{transform:translateY(-3px);background:var(--surface)}
+.hlcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.hlcard:hover::after{transform:scaleX(1)}
+.hlnum{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:rgba(212,168,83,.12);line-height:1;margin-bottom:1.2rem}
+.hltxt{font-size:.95rem;line-height:1.8;color:var(--text2)}
+
+/* CONTACT */
+.ctlayout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.ctinfos{display:flex;flex-direction:column;gap:1.5rem}
+.ctcard{display:flex;gap:1.2rem;align-items:flex-start;padding:1.5rem;background:var(--bg3);border:1px solid var(--border);transition:background .2s,transform .2s}
+.ctcard:hover{background:var(--gold-dim);transform:translateX(4px)}
+.cticon{width:38px;height:38px;background:var(--gold-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;border-radius:2px}
+.ctlbl{font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem}
+.ctval{font-size:.95rem;color:var(--text);font-weight:400}
+.langgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:1.5rem}
+.langcard{background:var(--bg3);border:1px solid var(--border);padding:2rem 1.5rem;transition:transform .3s,background .3s;position:relative;overflow:hidden}
+.langcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.langcard:hover{transform:translateY(-4px);background:var(--surface)}
+.lname{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--text);line-height:1;margin-bottom:.4rem}
+.llevel{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.ldots{display:flex;gap:.4rem}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);border:1px solid var(--border)}
+.dot.on{background:var(--gold);border-color:var(--gold)}
+
+/* FORM */
+.cform{display:flex;flex-direction:column;gap:1.2rem}
+.fgrp{display:flex;flex-direction:column;gap:.5rem}
+.flbl{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.finp,.ftxt{background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:300;padding:.9rem 1.2rem;border-radius:2px;outline:none;transition:border-color .2s,background .2s;width:100%}
+.finp:focus,.ftxt:focus{border-color:var(--gold);background:var(--surface)}
+.ftxt{resize:vertical;min-height:120px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fsub{display:inline-flex;align-items:center;justify-content:center;gap:.7rem;padding:1rem 2rem;background:var(--gold);color:var(--bg);font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;border:none;cursor:none;transition:all .25s;margin-top:.5rem;border-radius:2px;width:100%}
+.fsub:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,168,83,.25)}
+.fsub:disabled{opacity:.6;pointer-events:none}
+#fmsg{font-size:.8rem;color:#4ade80;display:none;margin-top:.3rem;padding:.8rem 1rem;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:2px}
+#fmsg.show{display:block}
+
+/* FOOTER */
+footer{background:#04060f;border-top:1px solid var(--border);padding:3rem 5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.ftbrand{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--gold)}
+.ftlinks{display:flex;gap:2rem}
+.ftlinks a{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);transition:color .2s}
+.ftlinks a:hover{color:var(--gold)}
+.ftcopy{font-size:.7rem;color:var(--text3);letter-spacing:.06em}
+
+/* BTT */
+#btt{position:fixed;right:2rem;bottom:2rem;width:44px;height:44px;background:var(--gold);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:1.1rem;border-radius:2px;cursor:none;opacity:0;transform:translateY(16px);transition:opacity .3s,transform .3s;z-index:300;box-shadow:0 4px 20px rgba(212,168,83,.3)}
+#btt.show{opacity:1;transform:translateY(0)}
+#btt:hover{background:var(--gold2);transform:translateY(-2px)!important}
+
+/* ANIMATIONS */
+@keyframes slideR{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-l{opacity:0;transform:translateX(-24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.vis,.reveal-l.vis{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  #hero{grid-template-columns:1fr}
+  .hright{border-left:none;border-top:1px solid var(--border);padding:3rem}
+  .statgrid{grid-template-columns:repeat(4,1fr)}
+  .sklist{grid-template-columns:1fr}
+  .ablayout{grid-template-columns:1fr}
+  .ctlayout{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  :root{--nav-w:0px}
+  #sidenav{display:none}
+  #mobnav{display:flex}
+  main{margin-top:60px}
+  .sec{padding:5rem 1.5rem}
+  .hleft{padding:4rem 1.5rem}
+  .hright{padding:2.5rem 1.5rem}
+  .expgrid{grid-template-columns:1fr}
+  .edugrid{grid-template-columns:1fr}
+  .hlgrid{grid-template-columns:1fr}
+  .statgrid{grid-template-columns:1fr 1fr}
+  footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}
+  #btt{right:1rem;bottom:1rem}
+  #cur,#curring{display:none}
+  body{cursor:auto}
+  button,a{cursor:pointer}
+  .frow{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curring"></div>
+<div id="prog"><div id="progbar"></div></div>
+
+<button id="btt" onclick="scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- MOBILE NAV -->
+<nav id="mobnav">
+  <span class="mobbrand">Uzair Uddin</span>
+  <div id="ham" onclick="toggleMob()"><span></span><span></span><span></span></div>
+</nav>
+<div id="mobmenu">
+  <a href="#hero" onclick="closeMob()">Home</a>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#experience" onclick="closeMob()">Experience</a>
+  <a href="#skills" onclick="closeMob()">Skills</a>
+  <a href="#education" onclick="closeMob()">Education</a>
+  <a href="#certifications" onclick="closeMob()">Certifications</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- SIDE NAV -->
+<nav id="sidenav">
+  <div class="nav-brand">Uzair Uddin</div>
+  <div class="nav-dots" id="navdots"></div>
+  <div class="nav-actions">
+    <button class="nibtn" id="thmbtn" onclick="toggleTheme()" title="Toggle theme">☀</button>
+    <a class="nibtn" href="mailto:haseebuzair5@gmail.com" title="Email me">✉</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero" data-label="Home">
+  <div class="hlines"></div>
+  <div class="hglow"></div>
+  <div class="hleft">
+    <div class="eyebrow"><span class="eline"></span><span class="etxt">Portfolio · 2025</span></div>
+    <div class="hstatus"><span class="sdot"></span> Open to Opportunities · Bengaluru, KA</div>
+    <h1 class="hname">
+      <span class="l1">Uzair</span>
+      <span class="l2">Uddin</span>
+    </h1>
+    <p class="htagline">
+      Accounting &amp; Tax Professional with <strong>3.8+ years</strong> of comprehensive experience in statutory compliance, financial reporting, direct &amp; indirect taxation — managing <strong>10+ client entities</strong> with a 100% on-time filing track record.
+    </p>
+    <div class="hbtns">
+      <a href="#contact" class="btn btnfill"><span>Get in Touch</span><span>→</span></a>
+      <a href="#experience" class="btn btnout">View Experience</a>
+      <a href="mailto:haseebuzair5@gmail.com?subject=Resume%20Request&body=Hi%20Uzair%2C%20I'd%20like%20your%20resume." class="btn btnout">⬇ Resume</a>
+    </div>
+  </div>
+  <div class="hright">
+    <div class="statgrid">
+      <div class="statbox"><div class="statval">3.8+</div><div class="statlbl">Years<br/>Experience</div></div>
+      <div class="statbox"><div class="statval">10+</div><div class="statlbl">Client<br/>Entities</div></div>
+      <div class="statbox"><div class="statval">100%</div><div class="statlbl">On-time<br/>Filing</div></div>
+      <div class="statbox"><div class="statval">ITR 1–6</div><div class="statlbl">Returns<br/>Filed</div></div>
+    </div>
+    <div class="qinfo">
+      <div class="qrow"><div class="qicon">📍</div><div><p class="qlbl">Location</p><p class="qval">Bengaluru, Karnataka, India</p></div></div>
+      <div class="qrow"><div class="qicon">🏢</div><div><p class="qlbl">Employer</p><p class="qval">K Rahman Khan &amp; Co., CA · Dec 2022 – Oct 2026</p></div></div>
+      <div class="qrow"><div class="qicon">🎓</div><div><p class="qlbl">Education</p><p class="qval">M.Com – Accounting &amp; Taxation</p></div></div>
+      <div class="qrow"><div class="qicon">📞</div><div><p class="qlbl">Phone</p><p class="qval"><a href="tel:+919206182302" style="color:var(--gold)">+91 92061 82302</a></p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec sec-alt" id="about" data-label="About">
+  <div class="sechd reveal">
+    <div><p class="secnum">01 / 06</p><h2 class="sectitle">About <em>Me</em></h2><div class="secline"><span class="ln"></span><span class="secsub">Background</span></div></div>
+  </div>
+  <div class="ablayout">
+    <div class="abtext reveal">
+      <p>I am a <strong>results-driven Accounting and Tax Professional</strong> with over <strong>3.8 years of experience</strong> at K Rahman Khan &amp; Co., Chartered Accountants in Bengaluru. My work spans the complete compliance lifecycle — from day-to-day bookkeeping to balance sheet finalization — for a diverse portfolio of Private Limited Companies, Partnership Firms, Proprietorships, and Charitable Trusts.</p>
+      <p>My expertise is rooted in <strong>GST lifecycle management</strong> (GSTR-1, GSTR-3B, GSTR-9), <strong>TDS/TCS computation and returns</strong>, ROC/MCA compliance under the Companies Act 2013, ITR preparation, payroll processing, and MIS reporting. I bring precision, a proactive mindset, and deep understanding of India's evolving tax regulations to every engagement.</p>
+      <p>I hold an <strong>M.Com in Accounting &amp; Taxation</strong> and am proficient in Tally ERP 9, Tally Prime, Zoho Books, Winman Suite, and Advanced Excel. I maintain a proven record of <strong>100% on-time filing accuracy</strong> and process optimisation to improve financial close efficiency.</p>
+      <div class="chips">
+        <span class="chip">Attention to Detail</span><span class="chip">Time Management</span>
+        <span class="chip">Client Communication</span><span class="chip">Team Collaboration</span>
+        <span class="chip">Problem Solving</span><span class="chip">Deadline Adherence</span>
+      </div>
+    </div>
+    <div class="abcard reveal">
+      <div class="abcardhd">Contact Information</div>
+      <div>
+        <div class="cirow"><span class="cilbl">Email</span><span class="cival"><a href="mailto:haseebuzair5@gmail.com" style="color:var(--gold)">haseebuzair5@gmail.com</a></span></div>
+        <div class="cirow"><span class="cilbl">Phone</span><span class="cival"><a href="tel:+919206182302" style="color:var(--gold)">+91 92061 82302</a></span></div>
+        <div class="cirow"><span class="cilbl">Location</span><span class="cival">Bengaluru, Karnataka</span></div>
+        <div class="cirow"><span class="cilbl">Languages</span><span class="cival">English · Kannada · Hindi · Urdu</span></div>
+        <div class="cirow"><span class="cilbl">Status</span><span class="cival" style="color:#4ade80">Open to Opportunities</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="sec" id="experience" data-label="Experience">
+  <div class="sechd reveal">
+    <div><p class="secnum">02 / 06</p><h2 class="sectitle">Work <em>Experience</em></h2><div class="secline"><span class="ln"></span><span class="secsub">Professional History</span></div></div>
+  </div>
+  <div class="exptl">
+    <div class="expitem reveal">
+      <div class="exptop">
+        <div>
+          <p class="exprole">Accountant</p>
+          <p class="expco">K Rahman Khan &amp; Co., Chartered Accountants — Bengaluru, Karnataka</p>
+        </div>
+        <span class="expbadge">Dec 2022 – Oct 2026</span>
+      </div>
+      <div class="expgrid">
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Managed end-to-end accounting and statutory compliance for 10+ client entities including Pvt. Ltd. Companies, Partnership Firms, Proprietorships, and Charitable Trusts, maintaining a zero-default filing record.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Led finalization of books of accounts and preparation of Balance Sheets, P&amp;L Statements, and Notes to Accounts per applicable accounting standards.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Prepared and filed Income Tax Returns (ITR-1 through ITR-6) for companies, professionals, firms, HUFs, and individuals; minimized tax liabilities through lawful deductions.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Executed comprehensive GST compliance including GSTR-1, GSTR-3B, GSTR-9, CMP-08, QRMP scheme management, and LUT filings for export clients.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Computed monthly TDS/TCS liabilities and filed quarterly returns (Forms 26Q, 27EQ, 26QB); ensured accurate challan payments and timely Form 16/16A issuance.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Assisted in ROC/MCA filings: Annual Return (MGT-7), Financial Statements (AOC-4), DIR-3 KYC, and event-based compliance under Companies Act, 2013.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Prepared monthly, quarterly, and annual MIS reports: cash flow statements, budget-vs-actual analysis, and key financial ratios for management decision-making.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Supported internal and stock audits by preparing reconciliation statements, verifying vouchers, and creating audit documentation and schedules.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Processed monthly payroll for client companies; ensured compliance with PF (EPF), ESI, and Professional Tax including timely remittances and return filings.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Conducted GST ITC reconciliation between GSTR-2A/2B and purchase registers to maximise Input Tax Credit claims and resolve supplier mismatches prior to filing deadlines.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Performed ledger scrutiny, bank reconciliation (BRS), invoice verification, inter-company reconciliation, and P&amp;L analysis to maintain data integrity and support financial close.</span></div>
+        <div class="expduty"><span class="darrow">▸</span><span class="dtxt">Liaised with clients and tax authorities to collect accounting data, resolve compliance queries, and ensure timely submission of all statutory filings.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="sec sec-alt" id="skills" data-label="Skills">
+  <div class="sechd reveal">
+    <div><p class="secnum">03 / 06</p><h2 class="sectitle">Technical <em>Skills</em></h2><div class="secline"><span class="ln"></span><span class="secsub">Proficiency</span></div></div>
+  </div>
+  <div class="sklist">
+    <div class="reveal">
+      <div class="skcat">
+        <p class="skcattitle">Core Competencies</p>
+        <div class="skitem"><div class="sktop"><span class="skname">GST Compliance &amp; Returns</span><span class="skpct">95%</span></div><div class="sktrack"><div class="skfill" data-w="95"></div></div></div>
+        <div class="skitem"><div class="sktop"><span class="skname">TDS/TCS Computation &amp; Returns</span><span class="skpct">92%</span></div><div class="sktrack"><div class="skfill" data-w="92"></div></div></div>
+        <div class="skitem"><div class="sktop"><span class="skname">Income Tax &amp; ITR Filing</span><span class="skpct">90%</span></div><div class="sktrack"><div class="skfill" data-w="90"></div></div></div>
+        <div class="skitem"><div class="sktop"><span class="skname">Financial Accounting &amp; Reporting</span><span class="skpct">93%</span></div><div class="sktrack"><div class="skfill" data-w="93"></div></div></div>
+        <div class="skitem"><div class="sktop"><span class="skname">ROC / MCA Compliance</span><span class="skpct">85%</span></div><div class="sktrack"><div class="skfill" data-w="85"></div></div></div>
+        <div class="skitem"><div class="sktop"><span class="skname">MIS Reporting &amp; Analysis</span><span class="skpct">88%</span></div><div class="sktrack"><div class="skfill" data-w="88"></div></div></div>
+        <div class="skitem"><div class="sktop"><span class="skname">Payroll Processing (PF/ESI/PT)</span><span class="skpct">87%</span></div><div class="sktrack"><div class="skfill" data-w="87"></div></div></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="skcat"><p class="skcattitle">Accounting Software</p><div class="toolwall"><span class="ttag">Tally ERP 9</span><span class="ttag">Tally Prime</span><span class="ttag">Zoho Books</span></div></div>
+      <div class="skcat"><p class="skcattitle">Tax &amp; Compliance Tools</p><div class="toolwall"><span class="ttag">Winman Suite</span><span class="ttag">IT e-Filing Portal</span><span class="ttag">GST Portal</span><span class="ttag">MCA21 Portal</span><span class="ttag">TRACES</span><span class="ttag">E-Way Bill Portal</span></div></div>
+      <div class="skcat"><p class="skcattitle">Microsoft Office &amp; Others</p><div class="toolwall"><span class="ttag">Advanced Excel</span><span class="ttag">VLOOKUP</span><span class="ttag">Pivot Tables</span><span class="ttag">IF Formulas</span><span class="ttag">Data Validation</span><span class="ttag">MS Word</span><span class="ttag">PowerPoint</span></div></div>
+    </div>
+  </div>
+  <div class="tickwrap reveal">
+    <div class="ticktrack">
+      <span class="tickitem">Financial Accounting</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">GST Compliance</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">Income Tax &amp; ITR Filing</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">TDS / TCS Returns</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">ROC / MCA Compliance</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">MIS Reporting</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">Payroll Processing</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">Bank Reconciliation</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">Audit Support</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">Financial Accounting</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">GST Compliance</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">Income Tax &amp; ITR Filing</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">TDS / TCS Returns</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">ROC / MCA Compliance</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">MIS Reporting</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">Payroll Processing</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">Bank Reconciliation</span><span class="tickitem ticksep">✦</span>
+      <span class="tickitem">Audit Support</span><span class="tickitem ticksep">✦</span>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION + CERTS + HIGHLIGHTS -->
+<section class="sec" id="education" data-label="Education">
+  <div class="sechd reveal">
+    <div><p class="secnum">04 / 06</p><h2 class="sectitle">Edu<em>cation</em></h2><div class="secline"><span class="ln"></span><span class="secsub">Academic Background</span></div></div>
+  </div>
+  <div class="edugrid reveal" style="grid-template-columns:repeat(2,1fr)">
+    <div class="educard" data-abbr="M.Com">
+      <p class="eduspec">Accounting &amp; Taxation</p>
+      <p class="edudeg">Master of Commerce</p>
+      <p class="educol">VET First Grade College, Bengaluru</p>
+      <p class="eduyear">2020 – 2022</p>
+      <span class="edubadge">CGPA 7.6 / 10</span>
+    </div>
+    <div class="educard" data-abbr="B.Com">
+      <p class="eduspec">Accounting &amp; Taxation</p>
+      <p class="edudeg">Bachelor of Commerce</p>
+      <p class="educol">Govt. Ramnarayan Chellaram College, Bengaluru</p>
+      <p class="eduyear">2017 – 2020</p>
+      <span class="edubadge">60%</span>
+    </div>
+    <div class="educard" data-abbr="PUC">
+      <p class="eduspec">12th — EBACs</p>
+      <p class="edudeg">II PUC</p>
+      <p class="educol">NSVK PU College, Bengaluru</p>
+      <p class="eduyear">2017</p>
+      <span class="edubadge">65%</span>
+    </div>
+    <div class="educard" data-abbr="10th">
+      <p class="eduspec">10th — SSLC</p>
+      <p class="edudeg">Secondary School</p>
+      <p class="educol">Deodate Public School, Bengaluru</p>
+      <p class="eduyear">2015</p>
+      <span class="edubadge">60%</span>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div style="margin-top:6rem">
+    <p class="secnum" style="margin-bottom:.5rem">Certifications</p>
+    <div class="reveal">
+      <table class="certtbl">
+        <thead><tr><th>Certification</th><th>Issuing Body</th><th style="text-align:right">Year</th></tr></thead>
+        <tbody>
+          <tr><td class="ctitle">Business Development Internship</td><td class="cissuer">Digifinite Solution Pvt Ltd</td><td class="cyear">2021–22</td></tr>
+          <tr><td class="ctitle">Microsoft Office Specialist – Excel</td><td class="cissuer">Microsoft</td><td class="cyear">2022</td></tr>
+          <tr><td class="ctitle">Tally ERP 9 – Accounting &amp; Inventory Management</td><td class="cissuer">NICT</td><td class="cyear">2022</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- KEY HIGHLIGHTS -->
+  <div style="margin-top:6rem">
+    <p class="secnum" style="margin-bottom:.5rem">Key Highlights</p>
+    <div class="hlgrid reveal">
+      <div class="hlcard"><p class="hlnum">01</p><p class="hltxt">Maintained a 100% on-time statutory filing record across GST, TDS, and Income Tax obligations for a portfolio of 10+ diverse client entities.</p></div>
+      <div class="hlcard"><p class="hlnum">02</p><p class="hltxt">Led GST ITC reconciliation initiative that maximised Input Tax Credit claims and resolved supplier mismatches prior to filing deadlines.</p></div>
+      <div class="hlcard"><p class="hlnum">03</p><p class="hltxt">Streamlined bank reconciliation workflows, reducing month-end closing time and improving the accuracy of financial reports across all client entities.</p></div>
+      <div class="hlcard"><p class="hlnum">04</p><p class="hltxt">Gained hands-on experience in DuPont financial analysis, evaluating entity performance through Return on Equity decomposition.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec sec-alt" id="contact" data-label="Contact">
+  <div class="sechd reveal">
+    <div><p class="secnum">05 / 06</p><h2 class="sectitle">Get in <em>Touch</em></h2><div class="secline"><span class="ln"></span><span class="secsub">Contact Me</span></div></div>
+  </div>
+  <div class="ctlayout">
+    <div class="ctinfos reveal-l">
+      <div class="ctcard">
+        <div class="cticon">📧</div>
+        <div><p class="ctlbl">Email</p><p class="ctval"><a href="mailto:haseebuzair5@gmail.com" style="color:var(--gold)">haseebuzair5@gmail.com</a></p></div>
+      </div>
+      <div class="ctcard">
+        <div class="cticon">📱</div>
+        <div><p class="ctlbl">Phone</p><p class="ctval"><a href="tel:+919206182302" style="color:var(--gold)">+91 92061 82302</a></p></div>
+      </div>
+      <div class="ctcard">
+        <div class="cticon">📍</div>
+        <div><p class="ctlbl">Location</p><p class="ctval">Bengaluru, Karnataka, India</p></div>
+      </div>
+      <div style="margin-top:.5rem">
+        <p style="font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:500">Languages</p>
+        <div class="langgrid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="langcard"><p class="lname">EN</p><p class="llevel">Professional</p><div class="ldots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div></div>
+          <div class="langcard"><p class="lname">KN</p><p class="llevel">Fluent</p><div class="ldots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div></div>
+          <div class="langcard"><p class="lname">HI</p><p class="llevel">Fluent</p><div class="ldots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></div></div>
+          <div class="langcard"><p class="lname">UR</p><p class="llevel">Native</p><div class="ldots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <form class="cform" id="cform" onsubmit="return false">
+        <div class="frow">
+          <div class="fgrp"><label class="flbl" for="fn">Your Name *</label><input class="finp" id="fn" type="text" placeholder="John Doe" autocomplete="off" required/></div>
+          <div class="fgrp"><label class="flbl" for="fe">Your Email *</label><input class="finp" id="fe" type="email" placeholder="you@example.com" autocomplete="off" required/></div>
+        </div>
+        <div class="fgrp"><label class="flbl" for="fs">Subject</label><input class="finp" id="fs" type="text" placeholder="Job Opportunity / Collaboration / Enquiry"/></div>
+        <div class="fgrp"><label class="flbl" for="fm">Message *</label><textarea class="ftxt" id="fm" placeholder="Write your message here..." required></textarea></div>
+        <button class="fsub" id="fsubmit" type="button" onclick="sendMsg()"><span id="fbtntxt">Send Message</span><span>→</span></button>
+        <div id="fmsg">✓ Your email client is opening with the message pre-filled. Thank you for reaching out!</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer id="footer" data-label="Footer">
+  <div class="ftbrand">Uzair Uddin</div>
+  <ul class="ftlinks">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="ftcopy">© 2025 Uzair Uddin · Bengaluru, India</p>
+</footer>
+
+</main>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),ring=document.getElementById('curring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function anim(){
+  rx+=(mx-rx)*.14;ry+=(my-ry)*.14;
+  if(cur){cur.style.left=mx+'px';cur.style.top=my+'px'}
+  if(ring){ring.style.left=rx+'px';ring.style.top=ry+'px'}
+  requestAnimationFrame(anim);
+})();
+
+/* PROGRESS + BTT */
+const pb=document.getElementById('progbar'),btt=document.getElementById('btt');
+window.addEventListener('scroll',()=>{
+  const p=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+  if(pb)pb.style.width=p+'%';
+  if(btt)btt.classList.toggle('show',window.scrollY>400);
+  activeDot();
+});
+
+/* SIDE NAV */
+const secs=[...document.querySelectorAll('[data-label]')].filter(s=>s.id&&getComputedStyle(s).display!=='none');
+const dotsC=document.getElementById('navdots');
+secs.forEach(s=>{
+  const d=document.createElement('div');
+  d.className='nav-dot';
+  d.innerHTML=`<div class="ndi"></div><span class="ndl">${s.dataset.label}</span>`;
+  d.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));
+  dotsC.appendChild(d);
+});
+function activeDot(){
+  const dots=document.querySelectorAll('.nav-dot');
+  let cur2=0;
+  secs.forEach((s,i)=>{if(window.scrollY>=s.offsetTop-220)cur2=i});
+  dots.forEach((d,i)=>d.classList.toggle('active',i===cur2));
+}
+activeDot();
+
+/* REVEAL */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      e.target.querySelectorAll('.skfill[data-w]').forEach(b=>{b.style.width=b.dataset.w+'%'});
+      ro.unobserve(e.target);
+    }
+  });
+},{threshold:.1});
+document.querySelectorAll('.reveal,.reveal-l').forEach(el=>ro.observe(el));
+
+/* COUNTERS */
+function counter(el,target){
+  let s=0,dur=1400;
+  const step=ts=>{if(!s)s=ts;const p=Math.min((ts-s)/dur,1);el.textContent=Math.floor(p*target)+'+';if(p<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step);
+}
+const co=new IntersectionObserver(([e])=>{
+  if(e.isIntersecting){
+    document.querySelectorAll('[data-count]').forEach(el=>counter(el,+el.dataset.count));
+    co.disconnect();
+  }
+},{threshold:.5});
+co.observe(document.getElementById('hero'));
+
+/* THEME */
+function toggleTheme(){
+  const t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('thmbtn').textContent=t==='dark'?'☀':'🌙';
+}
+
+/* MOBILE MENU */
+function toggleMob(){
+  document.getElementById('mobmenu').classList.toggle('open');
+  document.getElementById('ham').classList.toggle('open');
+}
+function closeMob(){
+  document.getElementById('mobmenu').classList.remove('open');
+  document.getElementById('ham').classList.remove('open');
+}
+
+/* CONTACT FORM */
+function sendMsg(){
+  const n=document.getElementById('fn').value.trim();
+  const em=document.getElementById('fe').value.trim();
+  const sub=document.getElementById('fs').value.trim();
+  const msg=document.getElementById('fm').value.trim();
+  if(!n||!em||!msg){alert('Please fill in Name, Email, and Message.');return}
+  const btn=document.getElementById('fsubmit');
+  const btntxt=document.getElementById('fbtntxt');
+  btn.disabled=true;
+  btntxt.textContent='Opening Email…';
+  const body=`Name: ${n}\nEmail: ${em}\n\nMessage:\n${msg}`;
+  window.location.href=`mailto:haseebuzair5@gmail.com?subject=${encodeURIComponent(sub||'Portfolio Enquiry - '+n)}&body=${encodeURIComponent(body)}`;
+  setTimeout(()=>{
+    document.getElementById('fmsg').classList.add('show');
+    btn.disabled=false;
+    btntxt.textContent='Send Message';
+    document.getElementById('fn').value='';
+    document.getElementById('fe').value='';
+    document.getElementById('fs').value='';
+    document.getElementById('fm').value='';
+  },1000);
+}
+
+/* Skill bars fallback */
+document.querySelectorAll('.skfill[data-w]').forEach(b=>{
+  const o=new IntersectionObserver(([e])=>{if(e.isIntersecting){b.style.width=b.dataset.w+'%';o.disconnect()}},{threshold:.3});
+  o.observe(b);
+});
+</script>
+</body>
+</html>
